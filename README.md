@@ -7,17 +7,17 @@
 - 2.) Express Install w/handlebars (decoupled app - not used)
     - `$ express --view=hbs --git`
 - 3.) Install Knex
-    - `$ npm install --save pg knex`
+    - `$ npm install pg knex --save`
 - 4.) Install Dotenv
-    - `$ npm install -- save dotenv`
+    - `$ npm install dotenv  --save `
 - 5.) Create Knex.js file
     - `$ init knex`
-
+    - knexfile.js
     ```js
     require("dotenv").config();
     module.exports = {
         development: {
-          client: 'postgresql',
+          client: 'pg',
           connection: 'postgres://localhost/db-name'
         },
         production: {
@@ -49,3 +49,20 @@
     ```
 - 12.) Install Cors
     - `$ npm install cors --save`
+- 13.) Install UUID (creates a unique id)
+    - `$ npm install uuid --save`
+
+---
+
+### Testing routes
+
+- `$ nodemon`
+- Postman
+  - `http://localhost:3000/items/2`
+
+---
+
+### Testing front end
+
+- `$ npm start`
+- http://localhost:3000/
