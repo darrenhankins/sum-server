@@ -66,3 +66,22 @@
 
 - `$ npm start`
 - http://localhost:3000/
+
+---
+
+### ERD
+
+<img src="../images/sum-app-erd.png" width="500px">
+
+---
+
+### Heroku Deployment
+
+```
+$ heroku login
+$ heroku create sum-app
+$ heroku addons:create heroku-postgresql --app sum-app  // Add databases
+$ heroku config --app sum-app  // Get database URL
+
+
+```
