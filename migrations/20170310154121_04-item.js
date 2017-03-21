@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
     table.text('image_url');
     table.boolean('free').defaultTo('true');
     table.boolean('available').defaultTo('true');
+    table.boolean('emailed').defaultTo('false');
     table.text('uuid');
   })
 };

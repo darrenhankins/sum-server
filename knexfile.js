@@ -1,10 +1,11 @@
 // Update with your config settings.
-require("dotenv").config();
+require("dotenv").config(); // or load()
 module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgresql://localhost/sum-app'
+    connection: 'postgresql://localhost/sum-app',
+    connection_url: 'http://localhost:3000/'
   },
 
   production: {

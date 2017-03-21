@@ -4,9 +4,13 @@ exports.seed = function(knex, Promise) {
   return knex.raw('DELETE FROM "group"; ALTER SEQUENCE group_id_seq RESTART WITH 1')
     .then(function() {
       const groups = [{
-        name: 'group1'
+        name: 'Family'
       },{
-        name: 'group2'
+        name: 'Friends'
+      },{
+        name: 'Broncos Tickets'
+      },{
+        name: 'Rockies Tickets'
       }];
       return knex('group').insert(groups);
     });

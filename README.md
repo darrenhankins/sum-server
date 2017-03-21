@@ -37,8 +37,9 @@
 - 9.) Seed database
     - `$ knex seed:make 01-user`
     - `$ knex seed:run`
-- 10.) Install Bookshelfjs
+- 10.) Install Bookshelfjs or Objection
     - `$ npm install bookself --save`
+    - `$ npm install objection --save`
 - 11.) Create a new folder for the database connection script
     - db folder
     - knex.js connection file
@@ -51,6 +52,10 @@
     - `$ npm install cors --save`
 - 13.) Install UUID (creates a unique id)
     - `$ npm install uuid --save`
+- 14.) Install NodeMailer (send emails)
+    - `$ npm install nodemailer --save`
+- 15.) Install bcrypt
+    - `$ yarn add bcrypt`
 
 ---
 
@@ -66,6 +71,10 @@
 
 - `$ npm start`
 - http://localhost:3000/
+- https://sum-app.herokuapp.com/
+- https://sum-app.herokuapp.com/
+- user/1/items (GET)
+- user/1/items (POST)
 
 ---
 
@@ -82,6 +91,12 @@ $ heroku login
 $ heroku create sum-app
 $ heroku addons:create heroku-postgresql --app sum-app  // Add databases
 $ heroku config --app sum-app  // Get database URL
+$ git add -A
+$ git commit -m "Initial Heroku Deployment"
+$ git push heroku master
+$ knex migrate:latest --env production
+$ knex seed:run --env production
+$ heroku pg:psql  // connect database
 
 
 ```

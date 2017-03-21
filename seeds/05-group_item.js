@@ -5,6 +5,9 @@ exports.seed = function(knex, Promise) {
     .then(function(){
       const group_items = [{
         item_id: 1,
+        group_id: 1
+      },{
+        item_id: 1,
         group_id: 2
       },{
         item_id: 2,

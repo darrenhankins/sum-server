@@ -46,10 +46,11 @@ module.exports = {
       return knex('item')
     })
   }
-  // getGroup: function(user_id) {
+  //,
+  //getGroup: function(user_id) {
   //   return knex.table('users')
   //   .innerJoin('accounts', 'users.id', '=', 'accounts.user_id')
-    // Outputs:
-    // select * from `users` inner join `accounts` on `users`.`id` = `accounts`.`user_id`
-
+  //   Outputs:
+  //   select * from `users` inner join `accounts` on `users`.`id` = `accounts`.`user_id`
+  // }
 }

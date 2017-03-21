@@ -5,10 +5,10 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       const friends = [{
         name: 'friend1',
-        email: 'friend1@test.com'
+        email: 'hankins.darren@gmail.com'
       },{
         name: 'friend2',
-        email: 'friend2@test.com'
+        email: 'darren@adrnln.com'
       }];
       return knex('friend').insert(friends);
     });

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const query = require('../db/query');
+const query = require('../../db/v1/query');
 
 
 // Get all items of user => GET /items/:id

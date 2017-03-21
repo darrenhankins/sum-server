@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const query = require('../db/query');
+const query = require('../../db/v1/query');
 
 // http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 // Get all items for user => GET /user/:id/items
@@ -22,7 +22,7 @@ router.get('/:id/items', (req, res, next) => {
   }
 });
 // get one item of user
-router.get('/:id/items/:item_id', (req, res, next) => {
+  router.get('/:id/items/:item_id', (req, res, next) => {
   if(!isNaN(req.params.id) || !isNaN(req.params.item_id)){
     query.getItem(req.params.id, req.params.item_id)
       .then(items => {

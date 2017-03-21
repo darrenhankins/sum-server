@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "~1.15.2",
     "bookshelf": "^0.10.3",
     "cookie-parser": "~1.4.3",
@@ -16,6 +17,8 @@
     "hbs": "~4.0.1",
     "knex": "^0.12.7",
     "morgan": "~1.7.0",
+    "nodemailer": "^3.1.7",
+    "objection": "^0.7.5",
     "pg": "^6.1.4",
     "serve-favicon": "~2.3.0",
     "uuid": "^3.0.1"

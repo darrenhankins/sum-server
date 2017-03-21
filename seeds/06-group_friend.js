@@ -5,10 +5,13 @@ exports.seed = function(knex, Promise) {
     .then(function(){
       const group_friends = [{
         group_id: 1,
+        friend_id: 1
+      },{
+        group_id: 1,
         friend_id: 2
       },{
         group_id: 2,
-        friend_id: 1
+        friend_id: 2
       }];
       return knex('group_friend').insert(group_friends);
     });

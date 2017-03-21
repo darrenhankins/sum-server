@@ -6,13 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-// var index = require('./routes/index');
-// var users = require('./routes/users');
-// var items = require('./routes/items');
-var user = require('./routes/user');
+var index = require('./routes/v1/index')
+// var user = require('./routes/v1/user');
+var user = require('./routes/v2/user');
+var auth = require('./auth')
 
-// var groups = require('./routes/groups');
-// var friends = require('./routes/friends');
 
 var app = express();
 
@@ -29,12 +27,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-// app.use('/', index);
-// app.use('/users', users);
-// app.use('/items', items);
+app.use('/auth', auth);
+app.use('/', index);
 app.use('/user', user);
-// app.use('/groups', groups);
-// app.use('/friends', friends);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
