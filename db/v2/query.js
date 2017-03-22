@@ -30,24 +30,50 @@ module.exports = {
     });
   },
 
+
+  // user_id: 1,
+  // name: 'Rockies Tickets',
+  // description: '2 Tickets to Opening Day',
+  // image_url: 'http://hlsb.com/Images/Rockies/tickets.png',
+  // free: false, // sell
+  // available: true,
+  // emailed: false,
+  // uuid: '7a955f98-2619-40c7-95c9-1a64a3e06741'
+
+
+  createItem: function(item) {
+    return Item
+    .query()
+    .insert({user_id: item.user_id, name: item.name, description: item.description, image_url: item.image_url})
+    .then(item => {
+      console.log(item instanceof Item); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t create item');
+    });
+  },
+
+
   getItemById: function(item_id) {
     return Item
       .query()
       .findById(item_id);
   },
 
-  // getAllItemsByUser: function(user_id){
-  //   // return knex('item')
-  //   return Item
-  //   .query()
-  //   .findById(user_id);
-  //   // .then(function (user) {
-  //   //   if (!user) { throwNotFound(); }
-  //   //     return user
-  //   //     .$relatedQuery('items')
-  //   //     .insert(body);
-  //   // });
-  // }
+  getAllItemsByUserId: function(user_id){
+    return Item
+      .query()
+      .where('user_id', '=', user_id)
+      .eager('[item_status, item_sell, group]');
+  },
+
+  getAllGroupsByUserId: function(user_id){
+    console.log("Get Groups");
+    return Group
+      .query()
+      .where('id', '=', user_id)
+      .eager('[user]');
+  },
 
   getItemAndRelated: function(user_id) {
     return Item
@@ -68,12 +94,6 @@ module.exports = {
       .findById(user_id)
       .eager('[item_status, item_sell, group, group.[friend]]');
   }
-
-  // getUser: function(id) {
-  //   return User
-  //     .query()
-  //     .findById(id);
-  // }
 
 };
 

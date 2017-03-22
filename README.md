@@ -56,6 +56,10 @@
     - `$ npm install nodemailer --save`
 - 15.) Install bcrypt
     - `$ yarn add bcrypt`
+- 16.) Install JWT
+    - https://jwt.io/introduction/
+    - `$ npm install jsonwebtoken --save`
+    - `$ npm install jwt-simple --save`
 
 ---
 

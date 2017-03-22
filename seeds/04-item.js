@@ -18,7 +18,7 @@ exports.seed = function(knex, Promise) {
         description: '5 drawer, white dresser',
         image_url: 'http://c.shld.net/rpx/i/s/i/spin/10042637/prod_1914099412?hei=245&wid=245&op_sharpen=1&qlt=85',
         free: true, // share
-        available: true,
+        available: false,
         emailed: false,
         uuid: '7a955f98-2619-40c7-95c9-1a64a3e06742'
       },{
@@ -34,7 +34,7 @@ exports.seed = function(knex, Promise) {
         user_id: 1,
         name: 'Football Party',
         description: 'Super Bowl Game shirt',
-        image_url: '',
+        image_url: 'http://harvardmagazine.com/sites/default/files/inline_images/2016-SeptOct/Football.png',
         free: true, // share
         available: true,
         emailed: false,

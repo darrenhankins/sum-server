@@ -14,12 +14,6 @@ const query = require("../../db/v2/query");
 // Update one item for user => PATCH /user/:id/items/:item_id
 
 
-router.post('/signup',(req, res, next) =>{
-
-});
-
-
-
 // Get 'item' and 'item_status' by item.id
 router.get('/:id/items/:item_id', function(req, res, next) {
     query.getItemAndRelated(req.params.item_id)
@@ -32,16 +26,28 @@ router.get('/:id/items/:item_id', function(req, res, next) {
 });
 
 // get all items of user
-// router.get('/:id/items', (req, res, next) => {
-//   if(!isNaN(req.params.id)){
-//     query.getAllItems(req.params.id)
-//       .then(items => {
-//         res.json(items);
-//       });
-//   } else {
-//     resError(res, 500, "Item Not Found")
-//   }
-// });
+router.get('/:id/items', (req, res, next) => {
+  if(!isNaN(req.params.id)){
+    query.getAllItemsByUserId(req.params.id)
+      .then(items => {
+        res.json(items);
+      });
+  } else {
+    resError(res, 500, "Item Not Found")
+  }
+});
+
+// get all groups of user
+router.get('/:id/groups', (req, res, next) => {
+  if(!isNaN(req.params.id)){
+    query.getAllGroupsByUserId(req.params.id)
+      .then(groups => {
+        res.json(groups);
+      });
+  } else {
+    resError(res, 500, "Groups Not Found")
+  }
+});
 
 
 router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res, next) {
@@ -56,6 +62,18 @@ router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res
         .catch(err => {
             res.send(err);
         });
+});
+
+
+router.post('/:id/items', (req, res, next) => {
+    // check to stee if email is unique
+    console.log("post");
+    console.log(req.body);
+    query
+      .createItem(req.body)
+      .then(item => {
+        res.json(item);
+      });
 });
 
 

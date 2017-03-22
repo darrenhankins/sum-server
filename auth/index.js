@@ -41,5 +41,36 @@ router.post('/signup',(req, res, next) => {
   }
 });
 
+router.post('/login',(req, res, next) => {
+  if(validUser(req.body)) {
+    // check to see if email is unique
+    query
+      .findUserByEmail(req.body.email)
+      .then(user => {
+        if(user){
+          bcrypt.compare(req.body.password, user.password, function(err, res) {
+              if (res == true) {
+                console.log("Correct Password");
+              } else {
+                console.log("INcorrect Password");
+              }
+          });
+        } else {
+          // next(new Error('No User in Database'));
+          // bcrypt.hash(req.body.password, 10, (error, hash) => {
+          //   user.password = hash;
+          //   query
+          //   .createUser(user)
+          //   .then(user => {
+          //     res.json(user);
+          //   });
+          // });
+        }
+      })
+  } else {
+    next(new Error('Invalid User'));
+  }
+})
+
 
 module.exports = router;
