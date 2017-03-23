@@ -1,5 +1,6 @@
 const Model = require('objection').Model;
 const Item = require('./item');
+const Group = require('./Group');
 
 class User extends Model {
   static get tableName() {
@@ -17,21 +18,30 @@ class User extends Model {
           to: 'item.user_id'
         }
       },
-
-      // Model: item has many groups
+      // model:user can have many groups
       group: {
-        // relation: Model.HasManyRelation,
-        relation: Model.ManyToManyRelation,
+        relation: Model.HasManyRelation,
         modelClass: Group,
-        join:{
+        join: {
           from: 'user.id',
-          through: {
-            from: 'group_user.user_id',
-            to: 'group_user.group_id'
-          },
-          to: 'group.id'
+          to: 'group.user_id'
         }
       }
+
+      // Model: item has many groups
+      // group: {
+      //   // relation: Model.HasManyRelation,
+      //   relation: Model.ManyToManyRelation,
+      //   modelClass: Group,
+      //   join:{
+      //     from: 'user.id',
+      //     through: {
+      //       from: 'group_user.user_id',
+      //       to: 'group_user.group_id'
+      //     },
+      //     to: 'group.id'
+      //   }
+      // }
     };
   }
 }

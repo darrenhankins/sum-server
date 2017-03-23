@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       const friends = [{
         name: 'friend1',
-        email: 'hankins.darren@gmail.com'
+        email: 'sharesumstuff@gmail.com'
       },{
         name: 'friend2',
         email: 'darren@adrnln.com'

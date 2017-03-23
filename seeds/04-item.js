@@ -15,8 +15,8 @@ exports.seed = function(knex, Promise) {
       },{
         user_id: 1,
         name: 'Dresser',
-        description: '5 drawer, white dresser',
-        image_url: 'http://c.shld.net/rpx/i/s/i/spin/10042637/prod_1914099412?hei=245&wid=245&op_sharpen=1&qlt=85',
+        description: '5 drawer, brown and white dresser',
+        image_url: 'http://www.newportcottages.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/i/ricki-4-drawer-dresser.jpg',
         free: true, // share
         available: false,
         emailed: false,
@@ -24,18 +24,27 @@ exports.seed = function(knex, Promise) {
       },{
         user_id: 1,
         name: 'Jeep',
-        description: '1985 Green Jeep, 4x4',
-        image_url: 'http://images.indexusedcars.com/Jeep/CJ7/1985/0b1f8cfc-d681-4ce6-ad0d-3ce5069bfd36/Jeep_CJ7_1985.jpeg',
+        description: '1985 Red Jeep, 4x4',
+        image_url: 'http://www.jeep.com/content/dam/fca-brands/na/jeep/en_us/global/header/Vehicles/Standard-Models/2017-Jeep-GlobalNav-VehicleCard-Standard-Wrangler.jpg.image.300.jpg',
         free: false, // barter
         available: true,
         emailed: false,
         uuid: '7a955f98-2619-40c7-95c9-1a64a3e06743'
       },{
         user_id: 1,
-        name: 'Football Party',
-        description: 'Super Bowl Game shirt',
+        name: 'Football',
+        description: 'Brand New Football',
         image_url: 'http://harvardmagazine.com/sites/default/files/inline_images/2016-SeptOct/Football.png',
         free: true, // share
+        available: true,
+        emailed: true,
+        uuid: '7a955f98-2619-40c7-95c9-1a64a3e06744'
+      },{
+        user_id: 1,
+        name: 'Red Mountain Bike',
+        description: 'Barely used mountain bike.',
+        image_url: 'http://images.evo.com/imgp/700/105373/472194/intense-cycles-tracer-275a-foundation-complete-mountain-bike-2016-red.jpg',
+        free: false, // share
         available: true,
         emailed: false,
         uuid: '7a955f98-2619-40c7-95c9-1a64a3e06744'

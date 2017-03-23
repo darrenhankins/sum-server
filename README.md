@@ -102,5 +102,10 @@ $ knex migrate:latest --env production
 $ knex seed:run --env production
 $ heroku pg:psql  // connect database
 
-
 ```
+
+Bike Helmet
+
+Kids Blue Bicycle Helment
+
+http://media.micro-scooters.co.uk/media/catalog/product/cache/1/thumbnail/632x770/17f82f742ffe127f42dca9de82fb58b1/M/A/MAH01NBU.png

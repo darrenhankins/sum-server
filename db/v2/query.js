@@ -53,6 +53,18 @@ module.exports = {
     });
   },
 
+  createGroup: function(group) {
+    return Group
+    .query()
+    .insert({user_id: group.user_id, name: group.name})
+    .then(group => {
+      console.log(group instanceof Group); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t create group');
+    });
+  },
+
 
   getItemById: function(item_id) {
     return Item
@@ -71,7 +83,7 @@ module.exports = {
     console.log("Get Groups");
     return Group
       .query()
-      .where('id', '=', user_id)
+      .where('user_id', '=', user_id)
       .eager('[user]');
   },
 
@@ -86,6 +98,20 @@ module.exports = {
     return Item
       .query()
       .findById(item_id)
+  },
+
+  updateItemAndUUID: function(item_id) {
+    return Item
+    .query()
+    // .patch({ available: false })
+    .patchAndFetchById(item_id, { available: false })
+    // .where('item_id', '=', item_id)
+    .then(item => {
+      console.log(item instanceof Item); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t create item');
+    });
   },
 
   getGroupEmails: function(user_id){

@@ -56,7 +56,7 @@ router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res
             // return res.json(item);
             if (req.params.uuid == item.uuid) {
               console.log("THE Match!!!");
-              console.log(req.params.friend_id);
+                // console.log(req.params.friend_id);
             }
         })
         .catch(err => {
@@ -65,9 +65,15 @@ router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res
 });
 
 
+router.patch('/claim/items/:item_id', function(req, res, ext) {
+  console.log("route hit");
+  query.updateItemAndUUID(req.params.item_id)
+    .then(function(item) {
+      console.log("Item - Here -->");
+    })
+});
+
 router.post('/:id/items', (req, res, next) => {
-    // check to stee if email is unique
-    console.log("post");
     console.log(req.body);
     query
       .createItem(req.body)
@@ -77,13 +83,31 @@ router.post('/:id/items', (req, res, next) => {
 });
 
 
+router.post('/:id/groups', (req, res, next) => {
+    console.log(req.body);
+    query
+      .createGroup(req.body)
+      .then(group => {
+        res.json(group);
+      });
+});
+
+router.post('/:id/group', (req, res, next) => {
+    // check to stee if email is unique
+    console.log(req.body);
+    query
+      .createGroup(req.body)
+      .then(group => {
+        res.json(group);
+      });
+});
 
 // Send email to groups
 var smtpTransport = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
     auth: {
-        user: "darren@xtremecartoon.com",
+        user: "sharesumstuff@gmail.com",
         pass: process.env.GMAIL_PASSWORD
     }
 });
@@ -119,7 +143,7 @@ router.get('/:id/items/:item_id/sendemail', function(req, res, next) {
                         to: friend_email,
                         subject: "Something you may be interested in...$"+cost,
                         text: "Hi " + friend_name + ",\n\nPlease take a look at this item I am wanting to get rid of...\n"
-                          +image_url+"\n\nPlease select the link below to claim this item..."+"\n\nhttp://localhost:3000/claim/item/"+item_id+"/friend/"+friend_id+"/uuid/"+uuid
+                          +image_url+"\n\nPlease select the link below to claim this item..."+"\n\nhttp://localhost:3005/claim/item/"+item_id+"/friend/"+friend_id+"/uuid/"+uuid
                     }
                     // console.log(mailOptions);
                     smtpTransport.sendMail(mailOptions, function(error, response) {

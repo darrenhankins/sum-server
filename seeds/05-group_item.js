@@ -12,6 +12,9 @@ exports.seed = function(knex, Promise) {
       },{
         item_id: 2,
         group_id: 1
+      },{
+        item_id: 4,
+        group_id: 1
       }];
       return knex('group_item').insert(group_items);
     });

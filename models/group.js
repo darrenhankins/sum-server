@@ -10,16 +10,24 @@ class Group extends Model {
   static get relationMappings() {
     return {
       // Model: group has many items
+      // user: {
+      //   // relation: Model.HasManyRelation,
+      //   relation: Model.ManyToManyRelation,
+      //   modelClass: __dirname + '/user',
+      //   join:{
+      //     from: 'group.id',
+      //     through: {
+      //       from: 'group_user.group_id',
+      //       to: 'group_user.user_id'
+      //     },
+      //     to: 'user.id'
+      //   }
+      // },
       user: {
-        // relation: Model.HasManyRelation,
-        relation: Model.ManyToManyRelation,
+        relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/user',
-        join:{
-          from: 'group.id',
-          through: {
-            from: 'group_user.group_id',
-            to: 'group_user.user_id'
-          },
+        join: {
+          from: 'group.user_id',
           to: 'user.id'
         }
       },
