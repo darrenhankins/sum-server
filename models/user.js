@@ -1,6 +1,7 @@
 const Model = require('objection').Model;
 const Item = require('./item');
-const Group = require('./Group');
+const Group = require('./group');
+const Friend = require('./friend');
 
 class User extends Model {
   static get tableName() {
@@ -16,6 +17,14 @@ class User extends Model {
         join: {
           from: 'user.id',
           to: 'item.user_id'
+        }
+      },
+      friend: {
+        relation: Model.HasManyRelation,
+        modelClass: Friend,
+        join: {
+          from: 'user.id',
+          to: 'friend.user_id'
         }
       },
       // model:user can have many groups

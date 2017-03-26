@@ -49,6 +49,30 @@ router.get('/:id/groups', (req, res, next) => {
   }
 });
 
+// get all groups of user
+router.get('/:id/friends', (req, res, next) => {
+  if(!isNaN(req.params.id)){
+    console.log("Route Hit");
+    query.getAllFriendsByUserId(req.params.id)
+      .then(friends => {
+        res.json(friends);
+      });
+  } else {
+    resError(res, 500, "Friends Not Found")
+  }
+});
+
+
+router.post('/:id/friends', (req, res, next) => {
+    console.log(req.body);
+    query
+      .createFriend(req.body)
+      .then(friend => {
+        res.json(friend);
+      });
+});
+
+
 
 router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res, next) {
     query.getItemAndUUID(req.params.item_id)
@@ -130,12 +154,17 @@ router.get('/:id/items/:item_id/sendemail', function(req, res, next) {
             }
             // var friends = groups[0].friend;
             // console.log(groups[0].friend.length);
-            for (let i = 0; i < groups.length; i++) {
-                let friends = groups[i].friend;
-                for (let j = 0; j < friends.length; j++) {
-                    let friend_id = friends[j].id;
-                    let friend_name = friends[j].name;
-                    let friend_email = friends[j].email;
+
+            // for (let i = 0; i < groups.length; i++) {
+                // let friends = groups[i].friend;
+                // for (let j = 0; j < friends.length; j++) {
+                    // let friend_id = friends[j].id;
+                    // let friend_name = friends[j].name;
+                    // let friend_email = friends[j].email;
+
+                    let friend_id = 3;
+                    let friend_name = "Darren";
+                    let friend_email = "sharesumstuff@gmail.com";
                     // console.log(friend_name);
                     // console.log(friend_email);
                     // console.log("https//sharesumstuff.com/user/"+user_id+"/items/"+item_id+"/uuid/"+uuid);
@@ -155,8 +184,8 @@ router.get('/:id/items/:item_id/sendemail', function(req, res, next) {
                             res.end("sent");
                         }
                     });
-                }
-            }
+                // }
+            // }
         })
         .catch(err => {
             res.send(err);

@@ -9,15 +9,9 @@ exports.seed = function(knex, Promise) {
       },{
         user_id: 1,
         name: 'Friends'
-      },{
-        user_id: 1,
-        name: 'Broncos Tickets'
-      },{
-        user_id: 1,
-        name: 'Rockies Tickets'
-      },{
-        user_id: 2,
-        name: 'Family Members'
+      // },{
+      //   user_id: 2,
+      //   name: 'Family Members'
       }];
       return knex('group').insert(groups);
     });

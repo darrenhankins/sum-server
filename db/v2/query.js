@@ -53,6 +53,18 @@ module.exports = {
     });
   },
 
+  createFriend: function(friend) {
+    return Friend
+    .query()
+    .insert({user_id: friend.user_id, name: friend.name, email: friend.email})
+    .then(friend => {
+      console.log(friend instanceof friend); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t create friend');
+    });
+  },
+
   createGroup: function(group) {
     return Group
     .query()
@@ -82,6 +94,14 @@ module.exports = {
   getAllGroupsByUserId: function(user_id){
     console.log("Get Groups");
     return Group
+      .query()
+      .where('user_id', '=', user_id)
+      .eager('[friend]');
+  },
+
+  getAllFriendsByUserId: function(user_id){
+    console.log("Get Friends");
+    return Friend
       .query()
       .where('user_id', '=', user_id)
       .eager('[user]');

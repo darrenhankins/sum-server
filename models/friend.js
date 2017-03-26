@@ -8,6 +8,14 @@ class friend extends Model {
 
   static get relationMappings() {
     return {
+      user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: __dirname + '/user',
+        join: {
+          from: 'friend.user_id',
+          to: 'user.id'
+        }
+      },
       // Model: friend has many groups
       group: {
         // relation: Model.HasManyRelation,
