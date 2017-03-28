@@ -61,6 +61,8 @@
     - `$ npm install jsonwebtoken --save`
     - `$ npm install jwt-simple --save`
     - `$ npm install moment --save`
+- 17.) Install cookie-session
+    - `$ npm install cookie-session --save`
 
 ---
 

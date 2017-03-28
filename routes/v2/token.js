@@ -1,26 +1,31 @@
 var express = require('express');
 var router = express.Router();
-var knex = require('../db/v2/knex');
 var bcrypt = require('bcrypt');
-
-var encrypt = require('../auth/encrypt');
-var token = require('../auth/token');
+var jwt = require('jsonwebtoken');
+var knex = require('../../db/v2/knex');
+var authHelpers = require('../../auth/_helpers');
+var localAuth = require('../../auth/local');
 
 
 router.post('/', (req, res, next) => {
+  console.log("token route hit");
+
   const email = req.body.email;
   const password = req.body.password;
-  console.log(req.body);
-  return encrypt.getUser(email)
+  let member;
+  console.log("body", req.body);
+  return authHelpers.getMember(email)
   .then((response) => {
-    encrypt.comparePass(password, response.password);
+    member = response;
+    authHelpers.comparePass(password, response.password);
     return response;
   })
-  .then((response) => { return token.encodeToken(response); })
+  .then((response) => { return localAuth.encodeToken(response); })
   .then((token) => {
     res.status(200).json({
       status: 'success',
-      token: token
+      token: token,
+      member: member
     });
   })
   .catch((err) => {

@@ -3,13 +3,17 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+var dotenv = require("dotenv").config();
+
 var index = require('./routes/v1/index')
-// var user = require('./routes/v1/user');
 var user = require('./routes/v2/user');
 var auth = require('./auth')
+
+var token = require('./routes/v2/token');
 
 
 var app = express();
@@ -24,13 +28,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 // app.options('*', cors());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/auth', auth);
 app.use('/', index);
 app.use('/user', user);
+app.use('/token', token);
 
 
 

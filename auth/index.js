@@ -1,150 +1,100 @@
-require("dotenv").config(); // or load()
-var express = require('express');
-const bcrypt = require('bcrypt');
-const knex = require('../db/v2/knex');
-var token = require('./token');
-const encrypt = require('./encrypt')
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Member = require('../db/v2/member');
 
+const bcrypt = require('bcrypt')
 
-// const knex = require('../db/knex');
-const query = require("../db/v2/query");
-
-
-
-router.post('/signup',(req, res, next) => {
-  if(encrypt.validUser(req.body)) {
-    // check to see if email is unique
-    query
-      .findUserByEmail(req.body.email)
-      .then(user => {
-        if(user){
-          next(new Error('Email In Use'));
-        } else {
-          const user = {
-            username: req.body.username,
-            email: req.body.email
-          }
-          bcrypt.hash(req.body.password, 10, (error, hash) => {
-            user.password = hash;
-            query
-            .createUser(user)
-            .then(user => {
-              res.json(user);
-            });
-          });
-        }
-      })
-  } else {
-    next(new Error('Invalid User'));
-  }
-});
-
-router.post('/login',(req, res, next) => {
-  if(encrypt.validUser(req.body)) {
-    // check to see if email is unique
-    query
-      .findUserByEmail(req.body.email)
-      .then(user => {
-        if(user){
-          bcrypt.compareSync(req.body.password, user.password,(err, res) => {
-              if (res == true) {
-                token.encodeToken(user)
-                res.json({message:'good'})
-                // console.log("Correct Password");
-              } else {
-                res.json({message:'Incorrect Password'})
-                // console.log("Incorrect Password");
-              }
-          });
-        } else {
-          next(new Error('No User in Database'));
-          // bcrypt.hash(req.body.password, 10, (error, hash) => {
-          //   user.password = hash;
-          //   query
-          //   .createUser(user)
-          //   .then(user => {
-          //     res.json(user);
-          //   });
-          // });
-        }
-      })
-  } else {
-    next(new Error('Invalid User'));
-  }
-})
-
-router.post('/login2', (req, res, next) => {
-  if(encrypt.validUser(req.body)) {
-    return query.findUserByEmail(req.body.email)
-    .then(user => {
-      if(user){
-        // return token.comparePass(req.body.password, user.password)
-        // .then(user => {
-        bcrypt.compare(req.body.password, user.password,(err, res) => {
-            if (res == true) {
-              // token.encodeToken(user)
-              // res.json({message:'good'})
-
-
-
-
-              // .then(response => {
-              // token.encodeToken(user)
-              // })
-              // .then((user) => {
-              //   res.status(200).json({
-              //     status: 'success',
-              //     token: token
-              //   });
-              // })
-              // .catch((err) => {
-              //   console.log(err);
-              //   res.status(500).json({
-              //     message: err,
-              //     status: 'error'
-              //   });
-              // });
-
-            } else {
-              res.json({message:'Incorrect Password'})
-              console.log("Incorrect Password");
-            }
-        })
-      } else {
-        console.log("No user in DB");
-        // next(new Error('No User in Database'));
-      }
-
-
-      // console.log(user);
-      // const password = req.body.password;
-      // encrypt.comparePass(password, user.password);
-      // return user;
-    })
-
-
-    .then(response => {
-      return token.encodeToken(response);
-    })
-    .then(token => {
-      res.status(200).json({
-        status: 'success',
-        token: token
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        message: err,
-        status: 'error'
-      });
+router.get('/', (req, res) => {
+    res.json({
+        message: ('😍')
     });
+});
 
-  }
+function validUser(user) {
+    const validEmail = typeof user.email == 'string' &&
+        user.email.trim() != '';
+    const validPassword = typeof user.password == 'string' && //varifies its a string
+        user.password.trim() != '' &&
+        user.password.trim().length >= 6;
+    return validEmail && validPassword;
+}
+
+router.post('/signup', (req, res, next) => {
+    if (validUser(req.body)) {
+        Member.getOneByEmail(req.body.email)
+            .then(member => {
+                console.log('member', member)
+                if (!member) {
+
+
+                  //hash password
+                  bcrypt.hash(req.body.password, 10 )
+                  .then((hash) => {
+
+                  //newmemeber
+                    const member = {
+                      username:req.body.username,
+                      email:req.body.email,
+                      date: new Date(),
+                      password:hash
+
+                    };
+
+                    Member.create(member)
+                    .then( id =>{
+                      res.json({
+                          id,
+                          message: '😱'
+                      });
+                    })
+                  //insert user into db
+                  //redirect
+
+                  });
+                } else {
+                  //email in use
+                    next(new Error('Email in use'));
+                }
+            });
+    } else {
+        next(new Error('Invalid user'))
+    }
 });
 
 
+router.post('/login', (req, res, next) => {
+  if(validUser(req.body)){
+    //check to see if in db
+Member.getOneByEmail(req.body.email)
+.then(member => {
+  console.log('member', member)
+  if(member){
+    //compare pass word with hashed password
+    bcrypt.compare(req.body.password, member.password)
+    .then((result) => {
+      if(result){
+//setting the set-cookie header
+     const isSecure = req.app.get('env') != 'development';
+        res.cookie('member_id', member.id, {
+          httpOny:true,
+          secure:isSecure,
+          signed:true
 
+        });
+        res.json({
+        message:'Logged in 🔓...'
+        });
+      }else{
+        next(new Error('Invalid login'));
+      }
+    });
+  } else {
+    next(new Error('Invalid login'));
+  }
+});
+  }else{
+    next(new Error('invalid login'));
+  }
+});
 
 module.exports = router;
