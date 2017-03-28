@@ -1,3 +1,4 @@
+var bcrypt = require('bcrypt');
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
@@ -6,7 +7,7 @@ exports.seed = function(knex, Promise) {
       const users = [{
         username: 'monkey',
         email: 'test1@test1.com',
-        password: 'test1'
+        password:  bcrypt.hashSync('test1', 10)
       // },{
       //   username: 'bear',
       //   email: 'test2@test2.com',

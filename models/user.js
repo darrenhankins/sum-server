@@ -1,7 +1,7 @@
 const Model = require('objection').Model;
-const Item = require('./item');
-const Group = require('./group');
-const Friend = require('./friend');
+// const Item = require('./item');
+// const Group = require('./group');
+// const Friend = require('./friend');
 
 class User extends Model {
   static get tableName() {
@@ -13,7 +13,7 @@ class User extends Model {
       // model:user can have many items
       item: {
         relation: Model.HasManyRelation,
-        modelClass: Item,
+        modelClass: __dirname + '/item',
         join: {
           from: 'user.id',
           to: 'item.user_id'
@@ -21,7 +21,7 @@ class User extends Model {
       },
       friend: {
         relation: Model.HasManyRelation,
-        modelClass: Friend,
+        modelClass: __dirname + '/friend',
         join: {
           from: 'user.id',
           to: 'friend.user_id'
@@ -30,7 +30,7 @@ class User extends Model {
       // model:user can have many groups
       group: {
         relation: Model.HasManyRelation,
-        modelClass: Group,
+        modelClass: __dirname + '/group',
         join: {
           from: 'user.id',
           to: 'group.user_id'

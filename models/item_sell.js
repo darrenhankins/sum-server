@@ -1,5 +1,5 @@
 const Model = require('objection').Model;
-const Item = require('./item');
+// const Item = require('./item');
 
 class Item_sell extends Model {
   static get tableName() {
@@ -12,7 +12,7 @@ class Item_sell extends Model {
       item: {
         relation: Model.BelongsToOneRelation,
         // relation: Model.HasManyRelation,
-        modelClass: Item,
+        modelClass: __dirname + '/item',
         join: {
           from: 'item.id',
           to: 'item_sell.item_id'

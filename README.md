@@ -60,6 +60,7 @@
     - https://jwt.io/introduction/
     - `$ npm install jsonwebtoken --save`
     - `$ npm install jwt-simple --save`
+    - `$ npm install moment --save`
 
 ---
 

@@ -1,5 +1,5 @@
 const Model = require('objection').Model;
-const Item = require('./item');
+// const Item = require('./item');
 
 class Item_status extends Model {
   static get tableName() {
@@ -11,7 +11,7 @@ class Item_status extends Model {
       // Model: item_status can have one item
       item: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Item,
+        modelClass: __dirname + '/item',
         join: {
           from: 'item.id',
           to: 'item_status.item_id'

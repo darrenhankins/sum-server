@@ -1,20 +1,19 @@
 require("dotenv").config(); // or load()
 var express = require('express');
 const bcrypt = require('bcrypt');
+const knex = require('../db/v2/knex');
+var token = require('./token');
+const encrypt = require('./encrypt')
 var router = express.Router();
+
 
 // const knex = require('../db/knex');
 const query = require("../db/v2/query");
 
 
-function validUser(user) {
-  const validEmail = typeof user.email == 'string' && user.email.trim() != '';
-  const validPassword = typeof user.password == 'string' && user.password.trim() != '';
-  return validEmail && validPassword;
-}
 
 router.post('/signup',(req, res, next) => {
-  if(validUser(req.body)) {
+  if(encrypt.validUser(req.body)) {
     // check to see if email is unique
     query
       .findUserByEmail(req.body.email)
@@ -42,21 +41,24 @@ router.post('/signup',(req, res, next) => {
 });
 
 router.post('/login',(req, res, next) => {
-  if(validUser(req.body)) {
+  if(encrypt.validUser(req.body)) {
     // check to see if email is unique
     query
       .findUserByEmail(req.body.email)
       .then(user => {
         if(user){
-          bcrypt.compare(req.body.password, user.password, function(err, res) {
+          bcrypt.compareSync(req.body.password, user.password,(err, res) => {
               if (res == true) {
-                console.log("Correct Password");
+                token.encodeToken(user)
+                res.json({message:'good'})
+                // console.log("Correct Password");
               } else {
-                console.log("INcorrect Password");
+                res.json({message:'Incorrect Password'})
+                // console.log("Incorrect Password");
               }
           });
         } else {
-          // next(new Error('No User in Database'));
+          next(new Error('No User in Database'));
           // bcrypt.hash(req.body.password, 10, (error, hash) => {
           //   user.password = hash;
           //   query
@@ -71,6 +73,78 @@ router.post('/login',(req, res, next) => {
     next(new Error('Invalid User'));
   }
 })
+
+router.post('/login2', (req, res, next) => {
+  if(encrypt.validUser(req.body)) {
+    return query.findUserByEmail(req.body.email)
+    .then(user => {
+      if(user){
+        // return token.comparePass(req.body.password, user.password)
+        // .then(user => {
+        bcrypt.compare(req.body.password, user.password,(err, res) => {
+            if (res == true) {
+              // token.encodeToken(user)
+              // res.json({message:'good'})
+
+
+
+
+              // .then(response => {
+              // token.encodeToken(user)
+              // })
+              // .then((user) => {
+              //   res.status(200).json({
+              //     status: 'success',
+              //     token: token
+              //   });
+              // })
+              // .catch((err) => {
+              //   console.log(err);
+              //   res.status(500).json({
+              //     message: err,
+              //     status: 'error'
+              //   });
+              // });
+
+            } else {
+              res.json({message:'Incorrect Password'})
+              console.log("Incorrect Password");
+            }
+        })
+      } else {
+        console.log("No user in DB");
+        // next(new Error('No User in Database'));
+      }
+
+
+      // console.log(user);
+      // const password = req.body.password;
+      // encrypt.comparePass(password, user.password);
+      // return user;
+    })
+
+
+    .then(response => {
+      return token.encodeToken(response);
+    })
+    .then(token => {
+      res.status(200).json({
+        status: 'success',
+        token: token
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message: err,
+        status: 'error'
+      });
+    });
+
+  }
+});
+
+
 
 
 module.exports = router;

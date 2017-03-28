@@ -1,5 +1,5 @@
 const Model = require('objection').Model;
-const Group = require('./group');
+// const Group = require('./group');
 
 class friend extends Model {
   static get tableName() {
@@ -20,7 +20,7 @@ class friend extends Model {
       group: {
         // relation: Model.HasManyRelation,
         relation: Model.ManyToManyRelation,
-        modelClass: Group,
+        modelClass: __dirname + '/group',
         join:{
           from: 'friend.id',
           through: {
