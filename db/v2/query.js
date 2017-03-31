@@ -1,4 +1,5 @@
 const knex = require('./knex');
+const bcrypt = require('bcrypt');
 const uuidV4 = require('uuid/v4');
 const objection = require('objection');
 
@@ -13,22 +14,46 @@ const User = require('../../models/user');
 
 module.exports = {
 
-  findUserByEmail: function(email) {
+  comparePass: function(userPassword, databasePassword) {
+    console.log(userPassword, databasePassword)
+    const bool = bcrypt.compareSync(userPassword, databasePassword);
+    // if (!bool) throw new Error('bad password');
+    if (!bool) return false;
+    else return true;
+  },
+
+  getUser: function(email) {
     return knex('user')
-      .where('email', email).first();
+      .where('email', email)
+      .first()
+      .catch(err => {
+        // var response =  {
+        //   status: "failure",
+        //   message: "Email Already Exists"
+        // };
+        // return response;
+        console.log('Email not found');
+      });
   },
 
   createUser: function(user) {
+    let hash = bcrypt.hashSync(user.password, 10);
     return User
     .query()
-    .insert({username: user.username, email: user.email, password: user.password})
+    .insert({username: user.username, email: user.email, password: hash})
     .then(user => {
       console.log(user instanceof User); // true
     })
     .catch(err => {
+      var response =  {
+        status: "failure",
+        message: "Email Already Exists"
+      };
+      return response;
       console.log('Didn\'t create user');
     });
   },
+
 
 
   // user_id: 1,

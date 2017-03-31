@@ -73,7 +73,7 @@ Member.getOneByEmail(req.body.email)
     bcrypt.compare(req.body.password, member.password)
     .then((result) => {
       if(result){
-//setting the set-cookie header
+        //setting the set-cookie header
      const isSecure = req.app.get('env') != 'development';
         res.cookie('member_id', member.id, {
           httpOny:true,
@@ -89,7 +89,7 @@ Member.getOneByEmail(req.body.email)
       }
     });
   } else {
-    next(new Error('Invalid login'));
+    next(new Error('Invalid Email'));
   }
 });
   }else{

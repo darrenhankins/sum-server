@@ -7,8 +7,9 @@ function createMember(req) {
   const hash = bcrypt.hashSync(req.body.password, 10);
   return knex('user')
   .insert({
+    username: req.body.username,
     email: req.body.email,
-    password: hash,
+    password: hash
   })
   .returning('*');
 }
@@ -16,7 +17,7 @@ function createMember(req) {
 
 
 function getMember(email){
-  console.log(email)
+  // console.log("getMember", email)
      return knex('user')
      .where('email', email).first()
 }
@@ -25,7 +26,8 @@ function getMember(email){
 function comparePass(userPassword, databasePassword) {
   console.log(userPassword, databasePassword)
   const bool = bcrypt.compareSync(userPassword, databasePassword);
-  if (!bool) throw new Error('bad password');
+  // if (!bool) throw new Error('bad password');
+  if (!bool) return false;
   else return true;
 }
 
