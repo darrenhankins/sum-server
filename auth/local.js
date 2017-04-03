@@ -1,3 +1,4 @@
+require("dotenv").config(); // or load()
 const moment = require('moment');
 const jwt = require('jwt-simple');
 
