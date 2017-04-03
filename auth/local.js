@@ -12,17 +12,17 @@ function encodeToken(member) {
 }
 
 // As a Promise
-function encodeTokenPromise(member) {
-  console.log(member);
-  return new Promise(function(resolve, reject){
-    const playload = {
-      exp: moment().add(14, 'days').unix(),
-      iat: moment().unix(),
-      member: member
-    };
-    resolve(jwt.encode(playload, process.env.TOKEN_SECRET));
-  });
-}
+// function encodeTokenPromise(member) {
+//   console.log(member);
+//   return new Promise(function(resolve, reject){
+//     const playload = {
+//       exp: moment().add(14, 'days').unix(),
+//       iat: moment().unix(),
+//       member: member
+//     };
+//     resolve(jwt.encode(playload, process.env.TOKEN_SECRET));
+//   });
+// }
 
 function decodeToken(token, callback) {
   const payload = jwt.decode(token, process.env.TOKEN_SECRET);
