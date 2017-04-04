@@ -49,11 +49,11 @@ router.post('/login', (req, res, next) => {
         //   });
         // })
 
-        // var token = localAuth.encodeToken(response);
+        var token = localAuth.encodeToken(response);
         return res.json({
           "response": {
             status: 'success',
-            // token: token,
+            token: token,
             member: member,
             message: "Passwords Match"
           }

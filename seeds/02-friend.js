@@ -5,12 +5,32 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       const friends = [{
         user_id: 1,
-        name: 'Paul',
-        email: 'sharesumstuff@gmail.com'
+        name: 'Adrnln',
+        email: 'darren@adrnln.com'
       },{
         user_id: 1,
-        name: 'Darren',
-        email: 'darren@adrnln.com'
+        name: 'darren',
+        email: 'darren@xtremecartoon.com'
+      },{
+        user_id: 1,
+        name: 'sellonline',
+        email: 'sellonline71@gmail.com'
+      },{
+        user_id: 2,
+        name: 'hankins.darren',
+        email: 'hankins.darren@gmail.com'
+      },{
+        user_id: 3,
+        name: 'Darren Hankins',
+        email: 'darren.hankins00@gmail.com'
+      },{
+        user_id: 3,
+        name: 'hankins.darren.3',
+        email: 'hankins.darren@gmail.com'
+      },{
+        user_id: 2,
+        name: 'hankins.darren.2',
+        email: 'hankins.darren@gmail.com'
       }];
       return knex('friend').insert(friends);
     });

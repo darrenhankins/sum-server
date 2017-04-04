@@ -9,9 +9,21 @@ exports.seed = function(knex, Promise) {
       },{
         group_id: 1,
         friend_id: 2
-      // },{
-      //   group_id: 2,
-      //   friend_id: 2
+      },{
+        group_id: 1,
+        friend_id: 3
+      },{
+        group_id: 2,
+        friend_id: 4
+      },{
+        group_id: 3,
+        friend_id: 5
+      },{
+        group_id: 4,
+        friend_id: 6
+      },{
+        group_id: 5,
+        friend_id: 7
       }];
       return knex('group_friend').insert(group_friends);
     });

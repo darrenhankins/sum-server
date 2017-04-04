@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.integer('user_id').references('user.id').unsigned().onDelete('cascade');
     table.text('name').notNullable();
-    table.text('email').unique();
+    table.text('email');
   });
 };
 
