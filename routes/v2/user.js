@@ -49,7 +49,7 @@ router.get('/:id/groups', (req, res, next) => {
   }
 });
 
-// get all groups of user
+// get all friends of user
 router.get('/:id/friends', (req, res, next) => {
   if(!isNaN(req.params.id)){
     console.log("Route Hit");
