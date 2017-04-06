@@ -42,7 +42,13 @@ router.get('/:id/groups', (req, res, next) => {
   if(!isNaN(req.params.id)){
     query.getAllGroupsByUserId(req.params.id)
       .then(groups => {
-        res.json(groups);
+        query.getAllFriendsByUserId(req.params.id)
+          .then(friends => {
+            let data = [];
+            data.push(groups);
+            data.push(friends);
+            res.json(data);
+          });
       });
   } else {
     resError(res, 500, "Groups Not Found")
