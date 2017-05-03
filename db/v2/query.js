@@ -90,6 +90,26 @@ module.exports = {
     });
   },
 
+  updateFriend: function(friend) {
+    return Friend
+    .query()
+    .where('id', '=', friend.friend_id)
+    .update({ name: friend.name, email: friend.email})
+    .then(friend => {
+      console.log(friend instanceof friend); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t create friend');
+    });
+  },
+
+//   knex('books')
+// .where('published_date', '<', 2000)
+// .update({
+//   status: 'archived',
+//   thisKeyIsSkipped: undefined
+// })
+
   createGroup: function(group) {
     return Group
     .query()

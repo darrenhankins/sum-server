@@ -79,6 +79,14 @@ router.post('/:id/friends', (req, res, next) => {
 });
 
 
+router.patch('/:id/friends/:friend_id', (req, res, next) => {
+  console.log(req.body);
+  query
+    .updateFriend(req.body)
+    .then(friend => {
+      res.json(friend);
+    });
+});
 
 router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res, next) {
     query.getItemAndUUID(req.params.item_id)
@@ -102,6 +110,7 @@ router.patch('/claim/items/:item_id', function(req, res, ext) {
       console.log("Item - Here -->");
     })
 });
+
 
 router.post('/:id/items', (req, res, next) => {
     console.log(req.body);
