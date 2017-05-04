@@ -1,5 +1,5 @@
 const knex = require('./knex');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
 getAllMembers: function(id){

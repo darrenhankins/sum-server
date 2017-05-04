@@ -1,6 +1,6 @@
 require("dotenv").config(); // or load()
 var express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const knex = require('../db/v2/knex');
 var token = require('./token');
 const encrypt = require('./encrypt')

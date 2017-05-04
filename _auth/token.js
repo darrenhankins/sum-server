@@ -1,7 +1,7 @@
 const knex = require('../db/v2/knex');
 const moment = require('moment');
 const jwt = require('jwt-simple');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 
 function comparePass(userPassword, databasePassword) {

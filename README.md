@@ -54,8 +54,10 @@
     - `$ npm install uuid --save`
 - 14.) Install NodeMailer (send emails)
     - `$ npm install nodemailer --save`
-- 15.) Install bcrypt
-    - `$ yarn add bcrypt`
+
+- 15.) Install bcryptjs
+    - $ npm install --save bcryptjs && npm uninstall --save bcrypt
+    - NO THIS`$ yarn add bcrypt`
 - 16.) Install JWT
     - https://jwt.io/introduction/
     - `$ npm install jsonwebtoken --save`

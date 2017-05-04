@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const knex = require('../db/v2/knex');
 
 // check to make sure item is blank and a string

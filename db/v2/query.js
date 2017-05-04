@@ -1,5 +1,5 @@
 const knex = require('./knex');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const uuidV4 = require('uuid/v4');
 const objection = require('objection');
 

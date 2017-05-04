@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Member = require('../db/v2/member');
 
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 router.get('/', (req, res) => {
     res.json({
