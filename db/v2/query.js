@@ -99,16 +99,22 @@ module.exports = {
       console.log(friend instanceof friend); // true
     })
     .catch(err => {
-      console.log('Didn\'t create friend');
+      console.log('Didn\'t update friend');
     });
   },
 
-//   knex('books')
-// .where('published_date', '<', 2000)
-// .update({
-//   status: 'archived',
-//   thisKeyIsSkipped: undefined
-// })
+  deleteFriend: function(friend) {
+    return Friend
+    .query()
+    .delete()
+    .where('id', '=', friend)
+    .then(friend => {
+      console.log(friend instanceof friend); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t delete friend');
+    });
+  },
 
   createGroup: function(group) {
     return Group
@@ -119,6 +125,32 @@ module.exports = {
     })
     .catch(err => {
       console.log('Didn\'t create group');
+    });
+  },
+
+  updateGroup: function(id, group) {
+    return Group
+    .query()
+    .where('id', '=', id)
+    .update({ name: group.name})
+    .then(group => {
+      console.log(group instanceof group); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t update group');
+    });
+  },
+
+  deleteGroup: function(group) {
+    return Group
+    .query()
+    .delete()
+    .where('id', '=', group)
+    .then(group => {
+      console.log(group instanceof group); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t delete group');
     });
   },
 

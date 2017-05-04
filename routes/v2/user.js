@@ -88,6 +88,16 @@ router.patch('/:id/friends/:friend_id', (req, res, next) => {
     });
 });
 
+router.delete('/:id/friends/:friend_id', (req, res, next) => {
+  console.log("DELETE Hit");
+  console.log(req.params.friend_id);
+  query
+    .deleteFriend(req.params.friend_id)
+    .then(friend => {
+      res.json(friend);
+    });
+});
+
 router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res, next) {
     query.getItemAndUUID(req.params.item_id)
         .then(function(item) {
@@ -129,6 +139,25 @@ router.post('/:id/groups', (req, res, next) => {
       .then(group => {
         res.json(group);
       });
+});
+
+router.patch('/:id/groups/:group_id', (req, res, next) => {
+  console.log(req.params.group_id, req.body);
+  query
+    .updateGroup(req.params.group_id,req.body)
+    .then(group => {
+      res.json(group);
+    });
+});
+
+router.delete('/:id/groups/:group_id', (req, res, next) => {
+  console.log("DELETE Hit");
+  console.log(req.params.group_id);
+  query
+    .deleteGroup(req.params.group_id)
+    .then(group => {
+      res.json(group);
+    });
 });
 
 router.post('/:id/group', (req, res, next) => {
