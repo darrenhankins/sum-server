@@ -6,6 +6,7 @@ const objection = require('objection');
 // require all models
 const Friend = require('../../models/friend');
 const Group = require('../../models/group');
+const GroupFriend = require('../../models/group_friend');
 const Item_sell = require('../../models/item_sell');
 const Item_status = require('../../models/item_status');
 const Item = require('../../models/item');
@@ -65,7 +66,15 @@ module.exports = {
   // emailed: false,
   // uuid: '7a955f98-2619-40c7-95c9-1a64a3e06741'
 
-
+// ****** ITEMS ******* //
+  // Get all items [group, item_status, item_sell]
+  getItems: function(user_id){
+    return Item
+      .query()
+      .where('user_id', '=', user_id)
+      .eager('[group, item_status, item_sell]');
+  },
+  // Creates new item
   createItem: function(item) {
     return Item
     .query()
@@ -77,6 +86,21 @@ module.exports = {
       console.log('Didn\'t create item');
     });
   },
+  // Gets 1 item [groups, item_status, item_sell]
+  getItemById: function(item_id) {
+    return Item
+      .query()
+      .findById(item_id)
+      .eager('[group.[friend], item_status.[friend], item_sell]');
+  },
+
+  // getItemById: function(item_id) {
+  //   return Item
+  //     .query()
+  //     .findById(item_id);
+  // },
+
+  // ****** FRIENDS ****** //
 
   createFriend: function(friend) {
     return Friend
@@ -116,6 +140,8 @@ module.exports = {
     });
   },
 
+  // ****** GROUPS ******* //
+
   createGroup: function(group) {
     return Group
     .query()
@@ -153,22 +179,8 @@ module.exports = {
       console.log('Didn\'t delete group');
     });
   },
-
-
-  getItemById: function(item_id) {
-    return Item
-      .query()
-      .findById(item_id);
-  },
-
-  getAllItemsByUserId: function(user_id){
-    return Item
-      .query()
-      .where('user_id', '=', user_id)
-      .eager('[item_status, item_sell, group]');
-  },
-
-  getAllGroupsByUserId: function(user_id){
+  // Get all groups [friends]
+  getGroups: function(user_id){
     console.log("Get Groups");
     return Group
       .query()
@@ -183,12 +195,14 @@ module.exports = {
       .where('user_id', '=', user_id)
       .eager('[user]');
   },
-
-  getItemAndRelated: function(user_id) {
-    return Item
+// new one
+  getFriendsInGroups: function(group_id){
+    console.log("Get Friends in Groups");
+    return GroupFriend
       .query()
-      .findById(user_id)
-      .eager('[item_status, item_sell, group]');
+      .where('group_id', '=', group_id)
+      .eager('[friend]');
+
   },
 
   getItemAndUUID: function(item_id) {

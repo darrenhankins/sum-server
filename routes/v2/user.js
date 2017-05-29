@@ -13,22 +13,12 @@ const query = require("../../db/v2/query");
 // Delete one item for user => DELETE /user/:id/items/:item_id
 // Update one item for user => PATCH /user/:id/items/:item_id
 
+// ****** ITEMS ******* //
 
-// Get 'item' and 'item_status' by item.id
-router.get('/:id/items/:item_id', function(req, res, next) {
-    query.getItemAndRelated(req.params.item_id)
-        .then(function(item) {
-            return res.json(item);
-        })
-        .catch(err => {
-            res.send(err);
-        });
-});
-
-// get all items of user
+// Get all items [group, item_status, item_sell]
 router.get('/:id/items', (req, res, next) => {
   if(!isNaN(req.params.id)){
-    query.getAllItemsByUserId(req.params.id)
+    query.getItems(req.params.id)
       .then(items => {
         res.json(items);
       });
@@ -36,24 +26,35 @@ router.get('/:id/items', (req, res, next) => {
     resError(res, 500, "Item Not Found")
   }
 });
-
-// get all groups of user
-router.get('/:id/groups', (req, res, next) => {
-  if(!isNaN(req.params.id)){
-    query.getAllGroupsByUserId(req.params.id)
-      .then(groups => {
-        query.getAllFriendsByUserId(req.params.id)
-          .then(friends => {
-            let data = [];
-            data.push(groups);
-            data.push(friends);
-            res.json(data);
-          });
-      });
-  } else {
-    resError(res, 500, "Groups Not Found")
-  }
+// Creates new item
+router.post('/:id/items', (req, res, next) => {
+  console.log(req.body);
+  query
+    .createItem(req.body)
+    .then(item => {
+      res.json(item);
+    });
 });
+// Get 1 item [groups, item_status, item_sell]
+router.get('/:id/items/:item_id', function(req, res, next) {
+    query.getItemById(req.params.item_id)
+        .then(function(item) {
+            return res.json(item);
+        })
+        .catch(err => {
+            res.send(err);
+        });
+});
+// Claim an item
+router.patch('/claim/items/:item_id', function(req, res, ext) {
+  console.log("route hit");
+  query.updateItemAndUUID(req.params.item_id)
+    .then(function(item) {
+      console.log("Item - Here -->");
+    })
+});
+
+// ****** FRIENDS ******* //
 
 // get all groups of user
 router.get('/:id/friends', (req, res, next) => {
@@ -67,8 +68,6 @@ router.get('/:id/friends', (req, res, next) => {
     resError(res, 500, "Friends Not Found")
   }
 });
-
-
 router.post('/:id/friends', (req, res, next) => {
     console.log(req.body);
     query
@@ -77,8 +76,6 @@ router.post('/:id/friends', (req, res, next) => {
         res.json(friend);
       });
 });
-
-
 router.patch('/:id/friends/:friend_id', (req, res, next) => {
   console.log(req.body);
   query
@@ -87,7 +84,6 @@ router.patch('/:id/friends/:friend_id', (req, res, next) => {
       res.json(friend);
     });
 });
-
 router.delete('/:id/friends/:friend_id', (req, res, next) => {
   console.log("DELETE Hit");
   console.log(req.params.friend_id);
@@ -97,7 +93,6 @@ router.delete('/:id/friends/:friend_id', (req, res, next) => {
       res.json(friend);
     });
 });
-
 router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res, next) {
     query.getItemAndUUID(req.params.item_id)
         .then(function(item) {
@@ -112,25 +107,25 @@ router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res
         });
 });
 
+// ****** GROUPS ******* //
 
-router.patch('/claim/items/:item_id', function(req, res, ext) {
-  console.log("route hit");
-  query.updateItemAndUUID(req.params.item_id)
-    .then(function(item) {
-      console.log("Item - Here -->");
-    })
-});
-
-
-router.post('/:id/items', (req, res, next) => {
-    console.log(req.body);
-    query
-      .createItem(req.body)
-      .then(item => {
-        res.json(item);
+// Retrieve a User's Groups [friends] and Friends in that group
+router.get('/:id/groups', (req, res, next) => {
+  if(!isNaN(req.params.id)){
+    query.getGroups(req.params.id)
+      .then(groups => {
+        query.getAllFriendsByUserId(req.params.id)
+          .then(friends => {
+            let data = [];
+            data.push(groups);
+            data.push(friends);
+            res.json(data);
+          });
       });
+  } else {
+    resError(res, 500, "Groups Not Found")
+  }
 });
-
 
 router.post('/:id/groups', (req, res, next) => {
     console.log(req.body);

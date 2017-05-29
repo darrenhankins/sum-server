@@ -1,7 +1,7 @@
 const Model = require('objection').Model;
 // const Group = require('./group');
 
-class friend extends Model {
+class Friend extends Model {
   static get tableName() {
     return 'friend';
   }
@@ -29,9 +29,17 @@ class friend extends Model {
           },
           to: 'group.id'
         }
+      },
+      item_status: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: __dirname + '/item_status',
+        join: {
+          from: 'friend.id',
+          to: 'item_status.item_id'
+        }
       }
     };
   }
 }
 
-module.exports = friend;
+module.exports = Friend;

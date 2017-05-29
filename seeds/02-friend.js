@@ -5,32 +5,44 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       const friends = [{
         user_id: 1,
-        name: 'Adrnln',
-        email: 'darren@adrnln.com'
+        name: 'david',
+        email: 'david@user1.com'
       },{
         user_id: 1,
+        name: 'doug',
+        email: 'doug@user1.com'
+      },{
+        user_id: 1,
+        name: 'jesse',
+        email: 'jesse@user1.com'
+      },{
+        user_id: 2,
+        name: 'robert',
+        email: 'darren@user2.com'
+      },{
+        user_id: 2,
+        name: 'paul',
+        email: 'paul@user2.com'
+      },{
+        user_id: 3,
+        name: 'david',
+        email: 'david@user3.com'
+      },{
+        user_id: 3,
         name: 'darren',
-        email: 'darren@xtremecartoon.com'
+        email: 'darren@user3.com'
       },{
         user_id: 1,
-        name: 'sellonline',
-        email: 'sellonline71@gmail.com'
+        name: 'phil',
+        email: 'phil@user1.com'
       },{
-        user_id: 2,
-        name: 'hankins.darren',
-        email: 'hankins.darren@gmail.com'
+        user_id: 1,
+        name: 'matt',
+        email: 'matt@user1.com'
       },{
-        user_id: 3,
-        name: 'Darren Hankins',
-        email: 'darren.hankins00@gmail.com'
-      },{
-        user_id: 3,
-        name: 'hankins.darren.3',
-        email: 'hankins.darren@gmail.com'
-      },{
-        user_id: 2,
-        name: 'hankins.darren.2',
-        email: 'hankins.darren@gmail.com'
+        user_id: 1,
+        name: 'paul',
+        email: 'paul@user1.com'
       }];
       return knex('friend').insert(friends);
     });

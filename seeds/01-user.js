@@ -5,17 +5,17 @@ exports.seed = function(knex, Promise) {
   return knex.raw('DELETE FROM "user"; ALTER SEQUENCE user_id_seq RESTART WITH 1')
     .then(function() {
       const users = [{
-        username: 'test1',
-        email: 'test1@test1.com',
-        password:  bcrypt.hashSync('test1', 10)
+        username: 'darren',
+        email: 'darren@gmail.com',
+        password:  bcrypt.hashSync('darren', 10)
       },{
-        username: 'test2',
-        email: 'test2@test2.com',
-        password: bcrypt.hashSync('test2', 10)
+        username: 'jesse',
+        email: 'jesse@gmail.com',
+        password: bcrypt.hashSync('jesse', 10)
       },{
-        username: 'test3',
-        email: 'test3@test3.com',
-        password: bcrypt.hashSync('test3', 10)
+        username: 'doug',
+        email: 'doug@gmail.com',
+        password: bcrypt.hashSync('doug', 10)
       }];
       return knex('user').insert(users);
     });

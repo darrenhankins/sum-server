@@ -68,11 +68,26 @@
 
 ---
 
-### Testing routes
+### Routes
 
 - `$ nodemon`
 - Postman
-  - `http://localhost:3000/items/2`
+
+#### Items
+- GET> `http://localhost:3000/user/1/items`
+  - All `items` with `group`, `item_status`, `item_sell`
+- POST> `http://localhost:3000/user/1/items`
+  - Creates new item for UserId 1 (item.user_id, item.name, item.description, item.image_url)
+
+- GET> `http://localhost:3000/user/1/items/2`
+  - ItemId 2 for UserId 1, returns (item, groups, item_status, item_sell)
+
+#### Groups
+
+- GET> `http://localhost:3000/user/1/groups`
+  - Retrieve a User's Groups and Friends in that group
+
+-
 
 ---
 

@@ -16,6 +16,14 @@ class Item_status extends Model {
           from: 'item.id',
           to: 'item_status.item_id'
         }
+      },
+      friend: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: __dirname + '/friend',
+        join: {
+          from: 'friend.id',
+          to: 'item_status.friend_id'
+        }
       }
     };
   }

@@ -10,7 +10,6 @@ class User extends Model {
 
   static get relationMappings() {
     return {
-      // model:user can have many items
       item: {
         relation: Model.HasManyRelation,
         modelClass: __dirname + '/item',
@@ -27,7 +26,6 @@ class User extends Model {
           to: 'friend.user_id'
         }
       },
-      // model:user can have many groups
       group: {
         relation: Model.HasManyRelation,
         modelClass: __dirname + '/group',
@@ -36,21 +34,6 @@ class User extends Model {
           to: 'group.user_id'
         }
       }
-
-      // Model: item has many groups
-      // group: {
-      //   // relation: Model.HasManyRelation,
-      //   relation: Model.ManyToManyRelation,
-      //   modelClass: Group,
-      //   join:{
-      //     from: 'user.id',
-      //     through: {
-      //       from: 'group_user.user_id',
-      //       to: 'group_user.group_id'
-      //     },
-      //     to: 'group.id'
-      //   }
-      // }
     };
   }
 }
