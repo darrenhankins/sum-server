@@ -188,12 +188,28 @@ module.exports = {
       .eager('[friend]');
   },
 
+  // Get all groups [friends]
+  getAllGroupsForUser: function(user_id){
+    console.log("Get Groups");
+    return Group
+      .query()
+      .where('user_id', '=', user_id);
+  },
+
   getAllFriendsByUserId: function(user_id){
     console.log("Get Friends");
     return Friend
       .query()
       .where('user_id', '=', user_id)
       .eager('[user]');
+  },
+
+  getAllFriendsAndGroupsByUserId: function(user_id){
+    console.log("Get Friends");
+    return Friend
+      .query()
+      .where('user_id', '=', user_id)
+      .eager('[group]');
   },
 // new one
   getFriendsInGroups: function(group_id){

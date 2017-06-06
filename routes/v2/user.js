@@ -60,10 +60,17 @@ router.patch('/claim/items/:item_id', function(req, res, ext) {
 router.get('/:id/friends', (req, res, next) => {
   if(!isNaN(req.params.id)){
     console.log("Route Hit");
-    query.getAllFriendsByUserId(req.params.id)
-      .then(friends => {
-        res.json(friends);
-      });
+    query.getAllGroupsForUser(req.params.id)
+      .then(groups => {
+        query.getAllFriendsAndGroupsByUserId(req.params.id)
+          .then(friends => {
+            // res.json(friends);
+            let data = [];
+            data.push(friends);
+            data.push(groups);
+            res.json(data);
+          });
+        });
   } else {
     resError(res, 500, "Friends Not Found")
   }
@@ -108,7 +115,6 @@ router.get('/:id/items/:item_id/friend/:friend_id/uuid/:uuid', function(req, res
 });
 
 // ****** GROUPS ******* //
-
 // Retrieve a User's Groups [friends] and Friends in that group
 router.get('/:id/groups', (req, res, next) => {
   if(!isNaN(req.params.id)){
