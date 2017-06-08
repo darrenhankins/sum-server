@@ -152,6 +152,8 @@ router.patch('/:id/groups/:group_id', (req, res, next) => {
 });
 
 router.post('/:id/groups/:group_id', (req, res, next) => {
+  console.log("HITTTTTT");
+
   query
     .updateGroup(req.params.group_id, req.body)
     .then(group => {
@@ -173,6 +175,39 @@ router.post('/:id/groups/:group_id', (req, res, next) => {
             .deleteGroupFriends(req.params.group_id, req.body.friends[y].id)
             .then(group => {
               console.log("DELETE GROUP..... ", group);
+              // for (let y=0; y<group.friends.length; y++){
+              //   console.log("TEST !!!! => ", group.friends[y].name);
+              // }
+              // res.json(group);
+            });
+        }
+    }
+  })
+});
+
+router.post('/:id/friends/:friend_id', (req, res, next) => {
+  console.log("HITTTTTT");
+  query
+    .updateFriend(req.params.friend_id, req.body)
+    .then(friend => {
+      for(let y=0; y<req.body.groups.length; y++){
+        console.log("GroupFriend POST: ", req.params.friend_id, req.body.groups[y]);
+        if (req.body.groups[y].checked == true) {
+          console.log("HEERRERERER.....");
+          query
+            .createGroupFriends(req.body.groups[y].id, req.params.friend_id)
+            .then(friend => {
+              console.log("FRIEND..... ", friend);
+              // for (let y=0; y<group.friends.length; y++){
+              //   console.log("TEST !!!! => ", group.friends[y].name);
+              // }
+              // res.json(group);
+            });
+        } else {
+          query
+            .deleteGroupFriends(req.body.groups[y].id, req.params.friend_id)
+            .then(friend => {
+              console.log("DELETE FRIEND..... ", friend);
               // for (let y=0; y<group.friends.length; y++){
               //   console.log("TEST !!!! => ", group.friends[y].name);
               // }

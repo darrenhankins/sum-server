@@ -114,18 +114,22 @@ module.exports = {
     });
   },
 
-  updateFriend: function(friend) {
+  updateFriend: function(id, friend) {
     return Friend
     .query()
-    .where('id', '=', friend.friend_id)
+    // .where('id', '=', friend.friend_id)
+    .where('id', '=', id)
     .update({ name: friend.name, email: friend.email})
     .then(friend => {
-      console.log(friend instanceof friend); // true
+      console.log(friend instanceof Friend); // true
     })
     .catch(err => {
       console.log('Didn\'t update friend');
     });
   },
+
+
+
 
   deleteFriend: function(friend) {
     return Friend
