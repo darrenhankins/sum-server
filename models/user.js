@@ -10,6 +10,7 @@ class User extends Model {
 
   static get relationMappings() {
     return {
+      // a user can have many items
       item: {
         relation: Model.HasManyRelation,
         modelClass: __dirname + '/item',
@@ -18,6 +19,7 @@ class User extends Model {
           to: 'item.user_id'
         }
       },
+      // a user can have many friends
       friend: {
         relation: Model.HasManyRelation,
         modelClass: __dirname + '/friend',
@@ -26,6 +28,7 @@ class User extends Model {
           to: 'friend.user_id'
         }
       },
+      // a user can have many groups
       group: {
         relation: Model.HasManyRelation,
         modelClass: __dirname + '/group',

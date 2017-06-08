@@ -160,11 +160,43 @@ module.exports = {
     .where('id', '=', id)
     .update({ name: group.name})
     .then(group => {
-      console.log(group instanceof group); // true
+      console.log("updateGroup => ", group instanceof Group); // true
     })
     .catch(err => {
       console.log('Didn\'t update group');
     });
+  },
+
+  createGroupFriends: function(group_id, friend_id) {
+    console.log("GROUP-----> ID", group_id);
+    console.log("Friend-----> ID", friend_id);
+
+    return GroupFriend
+    .query()
+    .insert({group_id: group_id, friend_id: friend_id})
+    // .insert({group_id: 11, friend_id: 13})
+    .then( groupFriend => {
+      console.log(groupFriend instanceof GroupFriend); // true
+    })
+    .catch(err => {
+      console.log("Didn't create GroupFriend");
+      console.log(err);
+
+    });
+  },
+
+  deleteGroupFriends: function(group_id, friend_id){
+    return GroupFriend
+      .query()
+      .delete()
+      .where('group_id', '=', group_id)
+      .andWhere('friend_id', '=', friend_id)
+      .then(groupFriend => {
+        console.log(groupFriend instanceof GroupFriend); // true
+      })
+      .catch(err => {
+        console.log("Didn't delete GroupFriend")
+      })
   },
 
   deleteGroup: function(group) {

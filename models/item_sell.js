@@ -9,6 +9,7 @@ class Item_sell extends Model {
   static get relationMappings() {
     return {
       // Model: item_status can have one item
+      // an item_sell can have 1 item
       item: {
         relation: Model.BelongsToOneRelation,
         // relation: Model.HasManyRelation,

@@ -8,6 +8,7 @@ class Friend extends Model {
 
   static get relationMappings() {
     return {
+      // a friend can have on user
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/user',
@@ -17,6 +18,7 @@ class Friend extends Model {
         }
       },
       // Model: friend has many groups
+      // many friends can be part of many groups
       group: {
         // relation: Model.HasManyRelation,
         relation: Model.ManyToManyRelation,
@@ -30,6 +32,22 @@ class Friend extends Model {
           to: 'group.id'
         }
       },
+
+
+
+      // // Model: friend has many groups
+      // group_friend: {
+      //   // relation: Model.HasManyRelation,
+      //   relation: Model.ManyToManyRelation,
+      //   modelClass: __dirname + '/group_friend',
+      //   join:{
+      //     from: 'group_friend.friend_id',
+      //     to: 'friend.id'
+      //   }
+      // },
+
+
+      // a friend can have 1 item_status
       item_status: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/item_status',

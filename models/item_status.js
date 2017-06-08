@@ -9,6 +9,7 @@ class Item_status extends Model {
   static get relationMappings() {
     return {
       // Model: item_status can have one item
+      // an item_status can have 1 item
       item: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/item',
@@ -17,6 +18,7 @@ class Item_status extends Model {
           to: 'item_status.item_id'
         }
       },
+      // an item_status can have 1 friend
       friend: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/friend',

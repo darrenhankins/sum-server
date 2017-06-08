@@ -23,6 +23,8 @@ class Group extends Model {
       //     to: 'user.id'
       //   }
       // },
+
+      // a group can have 1 user
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/user',
@@ -31,7 +33,7 @@ class Group extends Model {
           to: 'user.id'
         }
       },
-
+      // many groups can have many items
       item: {
         // relation: Model.HasManyRelation,
         relation: Model.ManyToManyRelation,
@@ -46,6 +48,7 @@ class Group extends Model {
         }
       },
       // Model: group has many friends
+      // many groups can have many friends
       friend: {
         // relation: Model.HasManyRelation,
         relation: Model.ManyToManyRelation,
@@ -58,7 +61,21 @@ class Group extends Model {
           },
           to: 'friend.id'
         }
-      }
+      },
+
+
+      // Model: friend has many groups
+      // group_friend: {
+      //   // relation: Model.HasManyRelation,
+      //   relation: Model.ManyToManyRelation,
+      //   modelClass: __dirname + '/group_friend',
+      //   join:{
+      //     from: 'group_friend.group_id',
+      //     to: 'group.id'
+      //   }
+      // }
+
+
     };
   }
 }

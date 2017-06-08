@@ -151,6 +151,38 @@ router.patch('/:id/groups/:group_id', (req, res, next) => {
     });
 });
 
+router.post('/:id/groups/:group_id', (req, res, next) => {
+  query
+    .updateGroup(req.params.group_id, req.body)
+    .then(group => {
+      for(let y=0; y<req.body.friends.length; y++){
+        console.log("GroupFriend POST: ", req.params.group_id, req.body.friends[y]);
+        if (req.body.friends[y].checked == true) {
+          console.log("HEERRERERER.....");
+          query
+            .createGroupFriends(req.params.group_id, req.body.friends[y].id)
+            .then(group => {
+              console.log("GROUP..... ", group);
+              // for (let y=0; y<group.friends.length; y++){
+              //   console.log("TEST !!!! => ", group.friends[y].name);
+              // }
+              // res.json(group);
+            });
+        } else {
+          query
+            .deleteGroupFriends(req.params.group_id, req.body.friends[y].id)
+            .then(group => {
+              console.log("DELETE GROUP..... ", group);
+              // for (let y=0; y<group.friends.length; y++){
+              //   console.log("TEST !!!! => ", group.friends[y].name);
+              // }
+              // res.json(group);
+            });
+        }
+    }
+  })
+});
+
 router.delete('/:id/groups/:group_id', (req, res, next) => {
   console.log("DELETE Hit");
   console.log(req.params.group_id);

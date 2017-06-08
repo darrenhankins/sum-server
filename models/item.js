@@ -9,6 +9,7 @@ class Item extends Model {
   static get relationMappings() {
     return {
       // Model: item can have one user
+      // an item can have 1 user
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/user',
@@ -18,6 +19,7 @@ class Item extends Model {
         }
       },
       // Model: item has many groups
+      // an item can have many groups
       group: {
         // relation: Model.HasManyRelation,
         relation: Model.ManyToManyRelation,
@@ -32,6 +34,7 @@ class Item extends Model {
         }
       },
       // Model: item can have one item_status
+      // an item can have 1 item_status
       item_status: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/item_status',
@@ -41,6 +44,7 @@ class Item extends Model {
         }
       },
       // Model: item can have one item_sell
+      // an item can have 1 item_sell
       item_sell: {
         relation: Model.BelongsToOneRelation,
         modelClass: __dirname + '/item_sell',
