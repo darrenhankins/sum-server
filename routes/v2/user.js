@@ -26,6 +26,7 @@ router.get('/:id/items', (req, res, next) => {
     resError(res, 500, "Item Not Found")
   }
 });
+
 // Creates new item
 router.post('/:id/items', (req, res, next) => {
   console.log(req.body);
@@ -35,6 +36,36 @@ router.post('/:id/items', (req, res, next) => {
       res.json(item);
     });
 });
+
+router.patch('/:id/items/:item_id', (req, res, next) => {
+  console.log(req.body);
+  query
+    .updateItem(req.params.item_id, req.body)
+    .then(item => {
+      res.json(item);
+    });
+});
+
+router.delete('/:id/items/:item_id', function(req, res, next) {
+  query
+    .deleteItem(req.params.item_id)
+    .then(function(item) {
+      return res.json(item);
+    });
+});
+
+
+router.delete('/:id/groups/:group_id', (req, res, next) => {
+  console.log("DELETE Hit");
+  console.log(req.params.group_id);
+  query
+    .deleteGroup(req.params.group_id)
+    .then(group => {
+      res.json(group);
+    });
+});
+
+
 // Get 1 item [groups, item_status, item_sell]
 router.get('/:id/items/:item_id', function(req, res, next) {
     query.getItemById(req.params.item_id)
@@ -46,7 +77,7 @@ router.get('/:id/items/:item_id', function(req, res, next) {
         });
 });
 // Claim an item
-router.patch('/claim/items/:item_id', function(req, res, ext) {
+router.patch('/claim/items/:item_id', function(req, res, next) {
   console.log("route hit");
   query.updateItemAndUUID(req.params.item_id)
     .then(function(item) {
@@ -83,6 +114,7 @@ router.post('/:id/friends', (req, res, next) => {
         res.json(friend);
       });
 });
+
 router.patch('/:id/friends/:friend_id', (req, res, next) => {
   console.log(req.body);
   query
@@ -91,6 +123,7 @@ router.patch('/:id/friends/:friend_id', (req, res, next) => {
       res.json(friend);
     });
 });
+
 router.delete('/:id/friends/:friend_id', (req, res, next) => {
   console.log("DELETE Hit");
   console.log(req.params.friend_id);
@@ -153,7 +186,6 @@ router.patch('/:id/groups/:group_id', (req, res, next) => {
 
 router.post('/:id/groups/:group_id', (req, res, next) => {
   console.log("HITTTTTT");
-
   query
     .updateGroup(req.params.group_id, req.body)
     .then(group => {

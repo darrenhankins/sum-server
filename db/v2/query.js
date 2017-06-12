@@ -94,6 +94,33 @@ module.exports = {
       .eager('[group.[friend], item_status.[friend], item_sell]');
   },
 
+  updateItem: function(item_id, item) {
+    return Item
+    .query()
+    // .where('id', '=', friend.friend_id)
+    .where('id', '=', item_id)
+    .update({ name: item.name, image_url: item.image_url, description: item.description })
+    .then(item => {
+      console.log(item instanceof item); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t update item');
+    });
+  },
+
+  deleteItem: function(item_id) {
+    return Item
+    .query()
+    .delete()
+    .where('id', '=', item_id)
+    .then(item => {
+      console.log(item instanceof item); // true
+    })
+    .catch(err => {
+      console.log('Didn\'t delete item');
+    });
+  },
+
   // getItemById: function(item_id) {
   //   return Item
   //     .query()
