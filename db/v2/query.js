@@ -7,6 +7,7 @@ const objection = require('objection');
 const Friend = require('../../models/friend');
 const Group = require('../../models/group');
 const GroupFriend = require('../../models/group_friend');
+const GroupItem = require('../../models/group_item');
 const Item_sell = require('../../models/item_sell');
 const Item_status = require('../../models/item_status');
 const Item = require('../../models/item');
@@ -72,7 +73,9 @@ module.exports = {
     return Item
       .query()
       .where('user_id', '=', user_id)
-      .eager('[group, item_status, item_sell]');
+      // .eager('[group, item_status, item_sell]');
+      .eager('[item_status, item_sell]');
+
   },
   // Creates new item
   createItem: function(item) {
@@ -91,8 +94,12 @@ module.exports = {
     return Item
       .query()
       .findById(item_id)
-      .eager('[group.[friend], item_status.[friend], item_sell]');
+      // .eager('[group.[friend], item_status.[friend], item_sell]');
+      .eager('[group, item_status.[friend], item_sell]');
+
   },
+
+  // getItemGroupsFriends: function(item_id)
 
   updateItem: function(item_id, item) {
     return Item
@@ -183,6 +190,30 @@ module.exports = {
     .catch(err => {
       console.log('Didn\'t create group');
     });
+  },
+
+  createItemGroup: function(item_id, group_id) {
+    // console.log("ITEM ID: ", item_id, "GROUP ID: ", group_id);
+    return GroupItem
+    .query()
+    .insert({item_id: item_id, group_id: group_id})
+    .then(groupitem => {
+      console.log("CREATE ITEM GROUP: ", groupitem instanceof GroupItem);
+    })
+    .catch(err => {
+      console.log('Didn\'t create Group - Item');
+    });
+  },
+
+  deleteItemGroup: function(item_id, group_id) {
+    return GroupItem
+    .query()
+    .delete()
+    .where('item_id', '=', item_id)
+    .andWhere('group_id', '=', group_id)
+    .then(groupitem => {
+      console.log(groupitem instanceof GroupItem);
+    })
   },
 
   updateGroup: function(id, group) {

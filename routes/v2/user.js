@@ -37,11 +37,35 @@ router.post('/:id/items', (req, res, next) => {
     });
 });
 
-router.patch('/:id/items/:item_id', (req, res, next) => {
-  console.log(req.body);
+// router.patch('/:id/items/:item_id', (req, res, next) => {
+router.post('/:id/items/:item_id', (req, res, next) => {
+  console.log("UPDATE ITEM: GROUPS: ", req.body[1]);
+  let item = req.body[0];
+  let groups = req.body[1];
   query
-    .updateItem(req.params.item_id, req.body)
+    .updateItem(req.params.item_id, item)
     .then(item => {
+        for(let y=0; y<groups.length; y++){
+          if (groups[y].checked == true) {
+            console.log("ID: ", groups[y].id);
+            query
+              .createItemGroup(req.params.item_id, groups[y].id)
+              .then(group => {
+                console.log("GROUP - ITEM added..... ", groups[y]);
+              });
+          } else {
+            query
+              .deleteItemGroup(req.params.item_id, groups[y].id)
+              .then(group => {
+                console.log("GROUP - ITEM deleted..... ", groups[y]);
+                // for (let y=0; y<group.friends.length; y++){
+                //   console.log("TEST !!!! => ", group.friends[y].name);
+                // }
+                // res.json(group);
+              });
+          }
+      }
+
       res.json(item);
     });
 });
@@ -70,7 +94,15 @@ router.delete('/:id/groups/:group_id', (req, res, next) => {
 router.get('/:id/items/:item_id', function(req, res, next) {
     query.getItemById(req.params.item_id)
         .then(function(item) {
-            return res.json(item);
+          query.getAllGroupsForUser(req.params.id)
+            .then(function(groups) {
+              console.log("ITEM: ", item);
+              console.log("GROUPS: ", groups);
+              let data = [];
+              data.push(item);
+              data.push(groups);
+              return res.json(data);
+            })
         })
         .catch(err => {
             res.send(err);
