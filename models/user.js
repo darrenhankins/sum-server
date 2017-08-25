@@ -37,6 +37,26 @@ class User extends Model {
           to: 'group.user_id'
         }
       }
+      // ,
+
+      // a user can have many group_friends
+      // group_friend: {
+      //   relation: Model.HasManyRelation,
+      //   modelClass: __dirname + '/group_friend',
+      //   join: {
+      //     from: 'user.id',
+      //     to: 'group_friend.user_id'
+      //   }
+      // },
+      // // a user can have many group_items
+      // group_item: {
+      //   relation: Model.HasManyRelation,
+      //   modelClass: __dirname + '/group_item',
+      //   join: {
+      //     from: 'user.id',
+      //     to: 'group_item.user_id'
+      //   }
+      // }
     };
   }
 }

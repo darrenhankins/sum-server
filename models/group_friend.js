@@ -108,6 +108,17 @@ class GroupFriend extends Model {
         to: 'group_friend.friend_id'
       }
     }
+    // ,
+
+    // an group_friend can have 1 user
+    // user: {
+    //   relation: Model.BelongsToOneRelation,
+    //   modelClass: __dirname + '/user',
+    //   join: {
+    //     from: 'user.id',
+    //     to: 'group_friend.user_id'
+    //   }
+    // }
 
 
     };

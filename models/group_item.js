@@ -108,6 +108,17 @@ class GroupItem extends Model {
         to: 'group_item.item_id'
       }
     }
+    // ,
+
+    // an group_item can have 1 user
+    // user: {
+    //   relation: Model.BelongsToOneRelation,
+    //   modelClass: __dirname + '/user',
+    //   join: {
+    //     from: 'user.id',
+    //     to: 'group_item.user_id'
+    //   }
+    // }
 
 
     };

@@ -49,12 +49,14 @@ router.post('/:id/items/:item_id', (req, res, next) => {
           if (groups[y].checked == true) {
             console.log("ID: ", groups[y].id);
             query
+              // .createItemGroup(req.params.id, req.params.item_id, groups[y].id)
               .createItemGroup(req.params.item_id, groups[y].id)
               .then(group => {
                 console.log("GROUP - ITEM added..... ", groups[y]);
               });
           } else {
             query
+              // .deleteItemGroup(req.params.id, req.params.item_id, groups[y].id)
               .deleteItemGroup(req.params.item_id, groups[y].id)
               .then(group => {
                 console.log("GROUP - ITEM deleted..... ", groups[y]);
@@ -226,6 +228,7 @@ router.post('/:id/groups/:group_id', (req, res, next) => {
         if (req.body.friends[y].checked == true) {
           console.log("HEERRERERER.....");
           query
+            // .createGroupFriends(req.params.id, req.params.group_id, req.body.friends[y].id)
             .createGroupFriends(req.params.group_id, req.body.friends[y].id)
             .then(group => {
               console.log("GROUP..... ", group);
@@ -236,6 +239,7 @@ router.post('/:id/groups/:group_id', (req, res, next) => {
             });
         } else {
           query
+            // .deleteGroupFriends(req.params.id, req.params.group_id, req.body.friends[y].id)
             .deleteGroupFriends(req.params.group_id, req.body.friends[y].id)
             .then(group => {
               console.log("DELETE GROUP..... ", group);
@@ -259,6 +263,7 @@ router.post('/:id/friends/:friend_id', (req, res, next) => {
         if (req.body.groups[y].checked == true) {
           console.log("HEERRERERER.....");
           query
+            // .createGroupFriends(req.params.id, req.body.groups[y].id, req.params.friend_id)
             .createGroupFriends(req.body.groups[y].id, req.params.friend_id)
             .then(friend => {
               console.log("FRIEND..... ", friend);
@@ -269,6 +274,7 @@ router.post('/:id/friends/:friend_id', (req, res, next) => {
             });
         } else {
           query
+            // .deleteGroupFriends(req.params.id, req.body.groups[y].id, req.params.friend_id)
             .deleteGroupFriends(req.body.groups[y].id, req.params.friend_id)
             .then(friend => {
               console.log("DELETE FRIEND..... ", friend);
@@ -316,7 +322,7 @@ router.get('/:id/items/:item_id/sendemail', function(req, res, next) {
     query.getGroupEmails(req.params.item_id)
         .then(function(emails) {
             // return res.json(emails);
-            console.log(emails);
+            console.log("emails ..... to send to .......",emails);
             var item_id = emails.id;
             var user_id = emails.user_id;
             var image_url = emails.image_url;
@@ -328,7 +334,10 @@ router.get('/:id/items/:item_id/sendemail', function(req, res, next) {
               var cost = emails.item_sell.price;
               console.log(cost);
             }
-            // var friends = groups[0].friend;
+            console.log("How many groups are there.......", groups.length);
+            var friends = "";
+            var friends = groups[0].friend;
+            console.log("Friends to send email to .......", friends);
             // console.log(groups[0].friend.length);
 
             // for (let i = 0; i < groups.length; i++) {

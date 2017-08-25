@@ -192,11 +192,12 @@ module.exports = {
     });
   },
 
-  createItemGroup: function(item_id, group_id) {
+  createItemGroup: function(user_id, item_id, group_id) {
     // console.log("ITEM ID: ", item_id, "GROUP ID: ", group_id);
     return GroupItem
     .query()
     .insert({item_id: item_id, group_id: group_id})
+    // .insert({user_id:user_id, item_id: item_id, group_id: group_id})
     .then(groupitem => {
       console.log("CREATE ITEM GROUP: ", groupitem instanceof GroupItem);
     })
@@ -229,12 +230,13 @@ module.exports = {
     });
   },
 
-  createGroupFriends: function(group_id, friend_id) {
+  createGroupFriends: function(user_id, group_id, friend_id) {
     console.log("GROUP-----> ID", group_id);
     console.log("Friend-----> ID", friend_id);
 
     return GroupFriend
     .query()
+    // .insert({user_id: user_id, group_id: group_id, friend_id: friend_id})
     .insert({group_id: group_id, friend_id: friend_id})
     // .insert({group_id: 11, friend_id: 13})
     .then( groupFriend => {
@@ -247,10 +249,12 @@ module.exports = {
     });
   },
 
-  deleteGroupFriends: function(group_id, friend_id){
+  deleteGroupFriends: function(user_id, group_id, friend_id){
     return GroupFriend
       .query()
       .delete()
+      // .where('user_id', '=', user_id)
+      // .andWhere('group_id', '=', group_id)
       .where('group_id', '=', group_id)
       .andWhere('friend_id', '=', friend_id)
       .then(groupFriend => {
@@ -339,7 +343,9 @@ module.exports = {
     return Item
       .query()
       .findById(user_id)
-      .eager('[item_status, item_sell, group, group.[friend]]');
+      // .eager('[item_status, item_sell, group, group.[friend]]');
+      .eager('[item_status, item_sell, group.[friend]]');
+
   }
 
 };
