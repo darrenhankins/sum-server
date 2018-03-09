@@ -316,7 +316,7 @@ router.get('/:id/items/:item_id/sendemail', function(req, res, next) {
     query.getGroupEmails(req.params.item_id)
         .then(function(emails) {
             // return res.json(emails);
-            console.log(emails);
+            console.log("emails ..... to send to .......",emails);
             var item_id = emails.id;
             var user_id = emails.user_id;
             var image_url = emails.image_url;
@@ -328,7 +328,10 @@ router.get('/:id/items/:item_id/sendemail', function(req, res, next) {
               var cost = emails.item_sell.price;
               console.log(cost);
             }
-            // var friends = groups[0].friend;
+            console.log("How many groups are there.......", groups.length);
+            var friends = "";
+            var friends = groups[0].friend;
+            console.log("Friends to send email to .......", friends);
             // console.log(groups[0].friend.length);
 
             // for (let i = 0; i < groups.length; i++) {
